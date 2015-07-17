@@ -9,9 +9,8 @@
   %body
     = render "nav"
 
-    - if flash[:notice].present?
+    - flash.each do |type, msg|
       .container
-        .alert.alert-info
-          = flash[:notice]
+        %div{class: "alert alert-#{type}"}= msg
 
     = yield

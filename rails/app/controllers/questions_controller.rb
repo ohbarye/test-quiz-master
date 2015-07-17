@@ -1,5 +1,7 @@
 class QuestionsController < ApplicationController
-  before_filter :find_question, only: [:show, :edit, :update]
+  include QuestionsHelper
+
+  before_filter :find_question, only: [:show, :edit, :update, :answer]
 
   def index
     @questions = Question.all
@@ -12,7 +14,7 @@ class QuestionsController < ApplicationController
   def create
     @question = Question.new question_params
     if @question.save
-      redirect_to root_path, notice: 'Question created successfully.'
+      redirect_to root_path, flash: {info: 'Question created successfully.'}
     else
       render :new
     end
@@ -20,14 +22,15 @@ class QuestionsController < ApplicationController
 
   def update
     if @question.update_attributes question_params
-      redirect_to root_path, notice: 'Question saved successfully.'
+      redirect_to root_path, flash: {info: 'Question saved successfully.'}
     else
       render :edit
     end
   end
 
   def answer
-    # TODO
+    flash.now[:success] = 'That\'s correct!' if is_valid_answer?
+    render :show
   end
 
   private
