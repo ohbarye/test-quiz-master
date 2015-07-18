@@ -7,7 +7,7 @@ module QuestionsHelper
   end
 
   private
-  
+
   def is_answer_blank?
     if @user_answer.blank?
       flash.now[:danger] = 'Please input your answer.'
@@ -26,4 +26,14 @@ module QuestionsHelper
     end
   end
 
+  def show_only_title(question)
+    lines = question.split("\n")
+    lines[0].strip
+  end
+
+  def format_question(question)
+    simple_format(
+      sanitize(question, tags: %w(b i h1 h2 h3 h4 h5 h6))
+    )
+  end
 end
