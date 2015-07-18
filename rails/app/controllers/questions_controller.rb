@@ -29,7 +29,7 @@ class QuestionsController < ApplicationController
   end
 
   def answer
-    flash.now[:success] = 'That\'s correct!' if is_valid_answer?
+    flash.now[:success] = "That's correct!" if is_valid_answer?
     render :show
   end
 
