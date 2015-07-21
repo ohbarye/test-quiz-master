@@ -7,11 +7,11 @@ RSpec.describe QuestionsController, :type => :controller do
       get :index
     end
 
-    it 'render template of index.' do
+    it 'renders template of index.' do
       expect(response).to render_template :index
     end
 
-    it 'load all questions.' do
+    it 'loads all questions.' do
       question = create(:question)
       expect(assigns(:questions)).to eq([question])
     end
@@ -22,19 +22,19 @@ RSpec.describe QuestionsController, :type => :controller do
       get :new
     end
 
-    it 'render template of new.' do
+    it 'renders template of new.' do
       expect(response).to render_template :new
     end
   end
 
   describe 'POST #create' do
-    it 'create new question.' do
+    it 'creates new question.' do
       expect{
         post :create, question: attributes_for(:question)
       }.to change(Question, :count).by(1)
     end
 
-    it 'redirect to root_path and show flash message.' do
+    it 'redirects to root_path and show flash message.' do
       post :create, question: attributes_for(:question)
       expect(response).to redirect_to root_path
       expect(flash[:info]).to eq('Question created successfully.')
@@ -47,11 +47,11 @@ RSpec.describe QuestionsController, :type => :controller do
       get :edit, id: @question
     end
 
-    it 'render template of edit.' do
+    it 'renders template of edit.' do
       expect(response).to render_template :edit
     end
 
-    it 'load specified question by :id.' do
+    it 'loads specified question by :id.' do
       expect(assigns(:question)).to eq(@question)
     end
   end
@@ -61,7 +61,7 @@ RSpec.describe QuestionsController, :type => :controller do
       @question = create(:question)
     end
 
-    it 'update question collectly.' do
+    it 'updates question collectly.' do
       old_question = @question.question
       old_answer   = @question.answer
       new_question  = 'Who is the CEO of Google?'
@@ -73,7 +73,7 @@ RSpec.describe QuestionsController, :type => :controller do
       .and change { @question.answer   }.to(new_answer).from(old_answer)
     end
 
-    it 'redirect to root_path and show flash message.' do
+    it 'redirects to root_path and show flash message.' do
       post :update, id: @question, question: attributes_for(:question)
       expect(response).to redirect_to root_path
       expect(flash[:info]).to eq('Question saved successfully.')
@@ -86,11 +86,11 @@ RSpec.describe QuestionsController, :type => :controller do
       get :show, id: @question
     end
 
-    it 'render template of show.' do
+    it 'renders template of show.' do
       expect(response).to render_template :show
     end
 
-    it 'load specified question by :id.' do
+    it 'loads specified question by :id.' do
       expect(assigns(:question)).to eq(@question)
     end
   end
@@ -100,27 +100,27 @@ RSpec.describe QuestionsController, :type => :controller do
       @question = create(:question)
     end
 
-    it 'render template of show.' do
+    it 'renders template of show.' do
       post :answer, id: @question, question: attributes_for(:question), answer: {'user_answer'=>''}
       expect(response).to render_template :show
     end
 
     context 'when submitted answer is correct.' do
-      it 'show flash message.' do
+      it 'shows flash message.' do
         post :answer, id: @question, question: attributes_for(:question), answer: {'user_answer'=>@question.answer}
         expect(flash[:success]).to eq("That's correct!")
       end
     end
 
     context 'when submitted answer is wrong.' do
-      it 'show flash message.' do
+      it 'shows flash message.' do
         post :answer, id: @question, question: attributes_for(:question), answer: {'user_answer'=>'Wrong answer'}
         expect(flash[:warning]).to eq('Wrong answer... Try again!')
       end
     end
 
     context 'when submitted answer is missing.' do
-      it 'show flash message.' do
+      it 'shows flash message.' do
         post :answer, id: @question, question: attributes_for(:question), answer: {'user_answer'=>''}
         expect(flash[:danger]).to eq('Please input your answer.')
       end

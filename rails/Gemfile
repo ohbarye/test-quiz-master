@@ -35,6 +35,6 @@ gem 'numbers_and_words'
 
 group :development, :test do
   gem 'rspec-rails'
-  gem "factory_girl_rails"
-  gem "capybara"
+  gem 'factory_girl_rails'
+  gem 'capybara'
 end

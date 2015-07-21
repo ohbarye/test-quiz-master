@@ -1,8 +1,8 @@
 require 'spec_helper'
-require 'questions_helper'
-include QuestionsHelper
 
 feature 'Question management' do
+  include QuestionsHelper
+
   background do
     @question = create(:question)
     visit root_path
